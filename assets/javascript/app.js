@@ -5,44 +5,134 @@ $(document).ready(function () {
     var answerButton2 = $("#answer-button-2");
     var answerButton3 = $("#answer-button-3");
     var answerButton4 = $("#answer-button-4")
+    var timerText = $("#timer")
+    var startButton = $("#start")
+    var answerButton = $(".answer-button")
+    var correctText = $("#correct")
+    var incorrectText = $("#incorrect")
 
     //Global Variables
-
-
+    var correct = 0;
+    var incorrect = 0;
+    var gameStarted = false;
+    var showQuestion;
+    var questionCounter = 0
+    var timer;
+    var time = 30
+    var correctAnswerArr = ["Miley Cyrus", "All I Want For Christmas Is You", "Kourtney Kardashian","0", "Nick Jonas", "Peter Hernandez", "Kendall Jenner", "Tommy Hilfiger", "Kelly Clarkson", "Tyra Banks"]
     //A Bank where all the question and answer pair are stored.    
     var questionBank = [
         {
-            question: "How many time zone are there in the United States?",
-            answer: ["7", "6", "5", "4"]
+            question: "Which on these female singer did not participate in the song 'Bang Bang'?",
+            answer: ["Ariana Grande", "Jessie J", "Nicki Minaj", "Miley Cyrus"]
         },
         {
             question: "Which Mariah Carey's song is not a billboard #1 hit?",
-            answer: ["We Belong Together", "Emotion", "Always Be My Baby", "Vision of Love"]
+            answer: ["We Belong Together", "All I Want For Christmas Is You", "Always Be My Baby", "Vision of Love"]
+        },
+        {
+            question: "Which of the Kardashian is the oldest?",
+            answer: ["Kim Kardashian", "Khole Kardashian", "Kourtney Kardashian", "Rob Kardashian"]
+        },
+        {
+            question: "How many Grammy Awards has singer, Katy Perrt, won?",
+            answer: ["0", "1", "2", "3"]
+        },
+        {
+            question: "Which of these male celebrity have Taylor Swift not dated?",
+            answer: ["Harry Styles", "Calvin Harris", "John Mayer", "Nick Jonas"]
+        },
+        {
+            question: "What is Bruno Mars's birhtname?",
+            answer: ["Roger Garcia", "Peter Hernandez", "Bruno Mars", "Edward Rodriguez"]
+        },
+        {
+            question: "Which one of these female singer did not participate in the 2006 movie Dreamgirls?",
+            answer: ["Beyoncé Knowles", "Jennifer Hudson", "Kelly Rowland", "Anika Noni Rose"]
+        },
+        {
+            question: "Which of these female model was not a cast in Taylor Swift's Bad Blood music video?",
+            answer: ["Gigi Hadid", "Kendall Jenner", "Karlie Klos", "Cara Delevingne"]
+        },
+        {
+            question: "Which of these male designer is not gay?",
+            answer: ["Tom Ford", "Yves Saint Laurent", "Stefano Gabbana", "Tommy Hilfiger"]
+        },
+        {
+            question: "Which of these singer was not a micky mouse club singer?",
+            answer: ["Kelly Clarkson","Christina Aguilera", "Britney Spears", "Justin Timberlake"]
+        }, 
+        {
+            question: "Which model created the tv show, America's Next Top Model?",
+            answer: ["Tyra Banks", "Naomi Campbell", "Kate Moss", "Cindy Crawford"]
         }
     ]
 
-    var i = 0
+    
 
     //Global Functions
+    function displayTimer () {
+        timerText.text(time)
+        time -- 
+        if (time === 0){
+            time = 30
+        }    
+    }
     
-    
-    function askQuestion() {
-            questionText.text(questionBank[i].question)
-            answerButton1.text(questionBank[i]["answer"][0])
-            answerButton2.text(questionBank[i]["answer"][1])
-            answerButton3.text(questionBank[i]["answer"][2])
-            answerButton4.text(questionBank[1]["answer"][3])
-        setTimeout(function () {
-            i++
-            questionText.text(questionBank[i].question)
-            answerButton1.text(questionBank[i]["answer"][0])
-            answerButton2.text(questionBank[i]["answer"][1])
-            answerButton3.text(questionBank[i]["answer"][2])
-            answerButton4.text(questionBank[1]["answer"][3])
-        }, 3000)
+    function startGame () {
+        if (!gameStarted){
+            gameStarted = true
+            displayQuestion()
+            displayTimer()
+            showQuestion = setInterval(nextQuestion, 30000)
+            timer = setInterval(displayTimer,1000)
+
+        }
     }
 
-    askQuestion()
+    function nextQuestion () {
+        questionCounter ++ ;
+        displayQuestion() 
+        displayTimer() 
+        setTimeout(displayQuestion, 1000)   
+        if (questionCounter === questionBank.length-1){
+            gameStarted = false
+            clearInterval(showQuestion)
+        }
+    }
+
+    function displayQuestion (){
+        questionText.text(questionBank[questionCounter].question);
+        answerButton1.text(questionBank[questionCounter]["answer"][0]);
+        answerButton1.attr("data-answer",questionBank[questionCounter]["answer"][0]);
+        answerButton2.text(questionBank[questionCounter]["answer"][1]);
+        answerButton2.attr("data-answer",questionBank[questionCounter]["answer"][1])
+        answerButton3.text(questionBank[questionCounter]["answer"][2]);
+        answerButton3.attr("data-answer",questionBank[questionCounter]["answer"][2])
+        answerButton4.text(questionBank[questionCounter]["answer"][3]); 
+        answerButton4.attr("data-answer",questionBank[questionCounter]["answer"][3])
+        
+    }
+//The two commented out codes below need more work
+    // answerButton.click(compareCorrectAnswer)
+
+    // function compareCorrectAnswer (){
+    //     if (correctAnswerArr.indexOf(answerButton.attr("data-answer") !== -1)) {
+    //         correct ++
+    //         correctText.text("Correct: " + correct)
+    //     }
+    //     else {
+    //         incorrect ++
+    //         incorrectText.text("Incorrect: " + incorrect)
+
+    //     }
+    // }
+    
+    
+    startButton.click(startGame) 
+
 })
+
+
 
 
