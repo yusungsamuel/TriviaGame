@@ -48,7 +48,7 @@ $(document).ready(function () {
         },
         {
             question: "Which one of these female singer did not participate in the 2006 movie Dreamgirls?",
-            answer: ["Beyoncé Knowles", "Jennifer Hudson", "Kelly Rowland", "Anika Noni Rose"]
+            answer: ["Beyonce Knowles", "Jennifer Hudson", "Kelly Rowland", "Anika Noni Rose"]
         },
         {
             question: "Which of these female model was not a cast in Taylor Swift's Bad Blood music video?",
@@ -86,15 +86,18 @@ $(document).ready(function () {
             displayTimer()
             showQuestion = setInterval(nextQuestion, 30000)
             timer = setInterval(displayTimer,1000)
-
         }
     }
 
     function nextQuestion () {
+        if(gameStarted){
         questionCounter ++ ;
         displayQuestion() 
         displayTimer() 
-        setTimeout(displayQuestion, 1000)   
+        setTimeout(displayQuestion, 1000)}
+        else{
+            return
+        } 
         if (questionCounter === questionBank.length-1){
             gameStarted = false
             clearInterval(showQuestion)
@@ -104,33 +107,39 @@ $(document).ready(function () {
     function displayQuestion (){
         questionText.text(questionBank[questionCounter].question);
         answerButton1.text(questionBank[questionCounter]["answer"][0]);
-        answerButton1.attr("data-answer",questionBank[questionCounter]["answer"][0]);
+        answerButton1.attr("value",questionBank[questionCounter]["answer"][0]);
         answerButton2.text(questionBank[questionCounter]["answer"][1]);
-        answerButton2.attr("data-answer",questionBank[questionCounter]["answer"][1])
+        answerButton2.attr("value",questionBank[questionCounter]["answer"][1])
         answerButton3.text(questionBank[questionCounter]["answer"][2]);
-        answerButton3.attr("data-answer",questionBank[questionCounter]["answer"][2])
+        answerButton3.attr("value",questionBank[questionCounter]["answer"][2])
         answerButton4.text(questionBank[questionCounter]["answer"][3]); 
-        answerButton4.attr("data-answer",questionBank[questionCounter]["answer"][3])
-        
+        answerButton4.attr("value",questionBank[questionCounter]["answer"][3])
+
     }
 //The two commented out codes below need more work
-    // answerButton.click(compareCorrectAnswer)
+    answerButton.on("click", compareCorrectAnswer)
 
-    // function compareCorrectAnswer (){
-    //     if (correctAnswerArr.indexOf(answerButton.attr("data-answer") !== -1)) {
-    //         correct ++
-    //         correctText.text("Correct: " + correct)
-    //     }
-    //     else {
-    //         incorrect ++
-    //         incorrectText.text("Incorrect: " + incorrect)
-
-    //     }
-    // }
+    function compareCorrectAnswer (){
+        var value = $(this).attr("value");  
+        if (correctAnswerArr.indexOf(value) === -1) {
+            incorrect ++
+            incorrectText.text("Incorrect: " + incorrect)
+            console.log(correctAnswerArr.indexOf(value))
+            console.log(value)
+            time = 30;
+            nextQuestion()
+        }
+        else {
+            correct ++
+            correctText.text("Correct: " + correct);
+            console.log(correctAnswerArr.indexOf(value));  
+            time = 30;
+            nextQuestion();          
+        }
+    }
     
     
     startButton.click(startGame) 
-
 })
 
 
