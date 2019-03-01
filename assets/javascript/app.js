@@ -23,6 +23,8 @@ $(document).ready(function () {
     var questionCounter = 0
     var timer;
     var time = 30
+
+
     var correctAnswerArr = ["Miley Cyrus", "All I Want For Christmas Is You", "Kourtney Kardashian", "0", "Peter Hernandez", "Kelly Rowland","Kendall Jenner", "Little Monster", "Kelly Clarkson", "Tyra Banks"]
     //A Bank where all the question and answer pair are stored.    
     var questionBank = [
@@ -81,6 +83,59 @@ $(document).ready(function () {
 
 
     //Global Functions
+    function startGame() {
+        if (!gameStarted) {
+            gameStarted = true;
+            startButton.attr("class", "hidden")
+            displayQuestion();
+            displayTimer();
+            showQuestion = setInterval(nextQuestion, 30000);
+            timer = setInterval(displayTimer, 1000);
+        }
+    }
+
+    function displayQuestion() {
+        questionText.text(questionBank[questionCounter].question);
+        answerButton1.text(questionBank[questionCounter]["answer"][0]);
+        answerButton1.attr("value", questionBank[questionCounter]["answer"][0]);
+        answerButton2.text(questionBank[questionCounter]["answer"][1]);
+        answerButton2.attr("value", questionBank[questionCounter]["answer"][1])
+        answerButton3.text(questionBank[questionCounter]["answer"][2]);
+        answerButton3.attr("value", questionBank[questionCounter]["answer"][2])
+        answerButton4.text(questionBank[questionCounter]["answer"][3]);
+        answerButton4.attr("value", questionBank[questionCounter]["answer"][3])
+    }
+
+    function displayTimer() {
+        timerText.text(time)
+        time--
+        if (time <= 0) {
+            time = 30
+        }
+    }
+
+    function compareCorrectAnswer() {
+        var value = $(this).attr("value");
+        if (gameStarted) {
+            if (correctAnswerArr.indexOf(value) === -1) {
+                incorrect++
+                incorrectText.text("Incorrect: " + incorrect)
+                console.log(correctAnswerArr.indexOf(value))
+                console.log(questionCounter)
+                inBetweenQuestions ()
+                setTimeout(resetBetweenQuestions, 5000)
+            }
+            else {
+                correct++
+                correctText.text("Correct: " + correct);
+                console.log(correctAnswerArr.indexOf(value));
+                console.log(questionCounter)
+                inBetweenQuestions ()
+                setTimeout(resetBetweenQuestions, 5000)
+            }
+        }
+    }
+
     function inBetweenQuestions () {
         questionText.text("")
         answerButton.text("")
@@ -99,24 +154,7 @@ $(document).ready(function () {
         nextQuestion();
     }
 
-    function displayTimer() {
-        timerText.text(time)
-        time--
-        if (time <= 0) {
-            time = 30
-        }
-    }
-
-    function startGame() {
-        if (!gameStarted) {
-            gameStarted = true
-            displayQuestion()
-            displayTimer()
-            showQuestion = setInterval(nextQuestion, 30000)
-            timer = setInterval(displayTimer, 1000)
-        }
-    }
-
+    
     function nextQuestion() {
         questionCounter++
         if (questionCounter > questionBank.length-1) {
@@ -136,44 +174,14 @@ $(document).ready(function () {
         
     }
 
-    function displayQuestion() {
-        questionText.text(questionBank[questionCounter].question);
-        answerButton1.text(questionBank[questionCounter]["answer"][0]);
-        answerButton1.attr("value", questionBank[questionCounter]["answer"][0]);
-        answerButton2.text(questionBank[questionCounter]["answer"][1]);
-        answerButton2.attr("value", questionBank[questionCounter]["answer"][1])
-        answerButton3.text(questionBank[questionCounter]["answer"][2]);
-        answerButton3.attr("value", questionBank[questionCounter]["answer"][2])
-        answerButton4.text(questionBank[questionCounter]["answer"][3]);
-        answerButton4.attr("value", questionBank[questionCounter]["answer"][3])
-
-    }
+    
     //The two commented out codes below need more work
     
     answerButton.on("click", compareCorrectAnswer)
 
-    function compareCorrectAnswer() {
-        $(this).data('clicked', true)
-        var value = $(this).attr("value");
-        if (gameStarted) {
-            if (correctAnswerArr.indexOf(value) === -1) {
-                incorrect++
-                incorrectText.text("Incorrect: " + incorrect)
-                console.log(correctAnswerArr.indexOf(value))
-                console.log(questionCounter)
-                inBetweenQuestions ()
-                setTimeout(resetBetweenQuestions, 1000)
-            }
-            else {
-                correct++
-                correctText.text("Correct: " + correct);
-                console.log(correctAnswerArr.indexOf(value));
-                console.log(questionCounter)
-                inBetweenQuestions ()
-                setTimeout(resetBetweenQuestions, 1000)
-            }
-        }
-    }
+
+
+
 
     startButton.click(startGame)
 })
