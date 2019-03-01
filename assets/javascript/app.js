@@ -11,7 +11,8 @@ $(document).ready(function () {
     var answerButton = $(".answer-button")
     var correctText = $("#correct")
     var incorrectText = $("#incorrect")
-    var video = $("#video")
+    var answerImage = $("#answer-image")
+    var correctAnswer = $("#correct-answer")
     var scoreboardText = $("#scoreboard")
 
     //Global Variables
@@ -80,9 +81,21 @@ $(document).ready(function () {
 
 
     //Global Functions
+    function inBetweenQuestions () {
+        questionText.text("")
+        answerButton.text("")
+        timerText.text("")
+        clearInterval(timer)
+        correctAnswer.text("The correct answer is: " + correctAnswerArr[questionCounter])
+        answerImage.attr("src", questionBank[questionCounter].image)
+    }
+    
     function resetBetweenQuestions() {
         clearInterval(showQuestion)
+        timer = setInterval(displayTimer, 1000)
         time = 30;
+        answerImage.attr("src", "")
+        correctAnswer.text("")
         nextQuestion();
     }
 
@@ -116,7 +129,6 @@ $(document).ready(function () {
             showQuestion = setInterval(nextQuestion, 30000)
             displayQuestion()
             displayTimer()
-            // setTimeout(displayQuestion, 1000)
         }
         else {
             return
@@ -137,9 +149,11 @@ $(document).ready(function () {
 
     }
     //The two commented out codes below need more work
+    
     answerButton.on("click", compareCorrectAnswer)
 
     function compareCorrectAnswer() {
+        $(this).data('clicked', true)
         var value = $(this).attr("value");
         if (gameStarted) {
             if (correctAnswerArr.indexOf(value) === -1) {
@@ -147,19 +161,20 @@ $(document).ready(function () {
                 incorrectText.text("Incorrect: " + incorrect)
                 console.log(correctAnswerArr.indexOf(value))
                 console.log(questionCounter)
-                resetBetweenQuestions()
+                inBetweenQuestions ()
+                setTimeout(resetBetweenQuestions, 1000)
             }
             else {
                 correct++
                 correctText.text("Correct: " + correct);
                 console.log(correctAnswerArr.indexOf(value));
                 console.log(questionCounter)
-                resetBetweenQuestions()
+                inBetweenQuestions ()
+                setTimeout(resetBetweenQuestions, 1000)
             }
         }
     }
 
-    console.log(correctAnswerArr.length)
     startButton.click(startGame)
 })
 
