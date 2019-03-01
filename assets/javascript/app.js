@@ -11,6 +11,7 @@ $(document).ready(function () {
     var answerButton = $(".answer-button")
     var correctText = $("#correct")
     var incorrectText = $("#incorrect")
+    var unaswerText = $("#unanswer")
     var answerImage = $("#answer-image")
     var correctAnswer = $("#correct-answer")
     var scoreboardText = $("#scoreboard")
@@ -18,11 +19,13 @@ $(document).ready(function () {
     //Global Variables
     var correct = 0;
     var incorrect = 0;
+    var unanswer = 0
     var gameStarted = false;
     var showQuestion;
     var questionCounter = 0
     var timer;
     var time = 30
+    var clicked = false;
 
 
     var correctAnswerArr = ["Miley Cyrus", "All I Want For Christmas Is You", "Kourtney Kardashian", "0", "Peter Hernandez", "Kelly Rowland","Kendall Jenner", "Little Monster", "Kelly Clarkson", "Tyra Banks"]
@@ -86,10 +89,12 @@ $(document).ready(function () {
     function startGame() {
         if (!gameStarted) {
             gameStarted = true;
-            startButton.attr("class", "hidden")
+            startButton.addClass("hidden")
+            questionCounter = 0;
+            resetScores();
             displayQuestion();
             displayTimer();
-            showQuestion = setInterval(nextQuestion, 30000);
+            showQuestion = setInterval(inBetweenQuestions, 30000);
             timer = setInterval(displayTimer, 1000);
         }
     }
@@ -107,7 +112,7 @@ $(document).ready(function () {
     }
 
     function displayTimer() {
-        timerText.text(time)
+        timerText.text("00:" + time)
         time--
         if (time <= 0) {
             time = 30
@@ -116,6 +121,7 @@ $(document).ready(function () {
 
     function compareCorrectAnswer() {
         var value = $(this).attr("value");
+        clicked  = true;
         if (gameStarted) {
             if (correctAnswerArr.indexOf(value) === -1) {
                 incorrect++
@@ -123,7 +129,6 @@ $(document).ready(function () {
                 console.log(correctAnswerArr.indexOf(value))
                 console.log(questionCounter)
                 inBetweenQuestions ()
-                setTimeout(resetBetweenQuestions, 5000)
             }
             else {
                 correct++
@@ -131,7 +136,6 @@ $(document).ready(function () {
                 console.log(correctAnswerArr.indexOf(value));
                 console.log(questionCounter)
                 inBetweenQuestions ()
-                setTimeout(resetBetweenQuestions, 5000)
             }
         }
     }
@@ -143,12 +147,18 @@ $(document).ready(function () {
         clearInterval(timer)
         correctAnswer.text("The correct answer is: " + correctAnswerArr[questionCounter])
         answerImage.attr("src", questionBank[questionCounter].image)
+        setTimeout(resetBetweenQuestions, 1000)
+        if(!clicked){
+            unanswer ++
+            unaswerText.text("Unanswered: " + unanswer)
+        }
     }
     
     function resetBetweenQuestions() {
         clearInterval(showQuestion)
         timer = setInterval(displayTimer, 1000)
         time = 30;
+        clicked = false
         answerImage.attr("src", "")
         correctAnswer.text("")
         nextQuestion();
@@ -161,10 +171,16 @@ $(document).ready(function () {
             gameStarted = false
             clearInterval(showQuestion)
             clearInterval(timer)
-            scoreboardText.text("Correct: " + correct + "  " + "Incorrect: " + incorrect)
+            resetScoresText()
+            scoreboardText.append("Correct: " + correct)
+            scoreboardText.append("<br>" + "Incorrect: " + incorrect) 
+            scoreboardText.append("<br>" + "Unanswered: " + unanswer)
+            var restartButton = $("<button>").text("Play Again")
+            restartButton.addClass("restart rounded-pill mx-auto text")
+            $(".scoreboard").append(restartButton)
         };
         if (gameStarted) {
-            showQuestion = setInterval(nextQuestion, 30000)
+            showQuestion = setInterval(inBetweenQuestions, 30000)
             displayQuestion()
             displayTimer()
         }
@@ -174,16 +190,32 @@ $(document).ready(function () {
         
     }
 
+    function resetScoresText() {
+        correctText.empty();
+        incorrectText.empty();
+        unaswerText.empty();
+    }
+
+    function resetScores () {
+        correct = 0;
+        incorrect = 0;
+        unanswer = 0;
+    }
+
+    function restart () {
+        startGame()
+        $(".restart").addClass("hidden")
+        scoreboardText.empty()
+    }
+
     
     //The two commented out codes below need more work
     
     answerButton.on("click", compareCorrectAnswer)
 
 
-
-
-
     startButton.click(startGame)
+    $(document).on("click", ".restart", restart)
 })
 
 

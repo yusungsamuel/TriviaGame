@@ -2,26 +2,64 @@
 <html>
 
 <head>
-<link rel="stylesheet" type="text/css" href="assets/css/style.css">
+    <link rel="stylesheet" type="text/css" href="assets/css/reset.css">
+
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link href="https://fonts.googleapis.com/css?family=Righteous" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="assets/css/style.css">
 </head>
 
 <body>
-    <button id="start">Start</button>
-    <div id="timer"></div>
-    <div id="correct"></div>
-    <div id="incorrect"></div>
-    <div id="question"></div>
-    <div id="answers">
-        <div id="correct-answer"></div>
-        <div id="answer-button-1" class="answer-button"></div>
-        <div id="answer-button-2" class="answer-button"></div>
-        <div id="answer-button-3" class="answer-button"></div>
-        <div id="answer-button-4" class="answer-button"></div>
-        <div><img id="answer-image"></div>
+    <div class="row">
+        <div class="col-xl-12 text-right">
+            <div id="correct" class="text"></div>
+            <div id="incorrect" class="text"></div>
+            <div id="unanswer" class="text"></div>
+        </div>
+    </div>
+
+    <div class="container mx-auto">
+        <div class="row">
+            <div class="col-xl-12 text-center">
+                <div id="start" class="rounded-pill mx-auto text" style="width: 300px;">Start</div>
+            </div>
+        </div>
+        
+        <div class="row">
+            <div class="col-xl-12 text-center">
+                <div id="timer" class="text"></div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-xl-12 text-center">
+                <div id="correct-answer" class="text"></div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xl-12 text-center">
+                <div id="question" class="text"></div>
+                <div id="answers">
+                    <div id="correct-answer"></div>
+                    <div id="answer-button-1" class="answer-button text"></div>
+                    <div id="answer-button-2" class="answer-button text"></div>
+                    <div id="answer-button-3" class="answer-button text"></div>
+                    <div id="answer-button-4" class="answer-button text"></div>
+                    <div><img id="answer-image"></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-xl-12 text-center text scoreboard">
+                <div id="scoreboard"></div>
+            </div>
+
+        </div>
     </div>
 
 
-    <div id="scoreboard"></div>
 
 
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>

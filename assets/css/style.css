@@ -1,3 +1,42 @@
+body {
+    background-image: url("https://ak8.picdn.net/shutterstock/videos/3671588/thumb/1.jpg");
+    background-size: cover;
+    background-repeat: no-repeat;
+}
+
+.container {
+    position: relative;
+    top:30vh;
+}
+
+#start {
+    background-image: url("https://media.giphy.com/media/U3qYN8S0j3bpK/giphy.gif");
+    padding:1%;
+    font-size:500%;
+}
+
+.restart {
+    background-image: url("https://media.giphy.com/media/U3qYN8S0j3bpK/giphy.gif");
+    padding:1%;
+    font-size:500%;
+}
+
+#timer {
+    font-size: 300%;
+}
+
+.answer-button:hover{
+    background-image: url("https://thumbs.gfycat.com/ThisTimelyAlaskajingle-size_restricted.gif");
+    opacity: 0.5;
+    cursor: pointer;
+}
+
+.text {
+    color:white;
+    font-size:200%;
+    font-family: 'Righteous', cursive;
+}
+
 .hidden {
     display: none;
 }
