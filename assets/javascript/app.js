@@ -147,7 +147,7 @@ $(document).ready(function () {
         clearInterval(timer)
         correctAnswer.text("The correct answer is: " + correctAnswerArr[questionCounter])
         answerImage.attr("src", questionBank[questionCounter].image)
-        setTimeout(resetBetweenQuestions, 1000)
+        setTimeout(resetBetweenQuestions, 3000)
         if(!clicked){
             unanswer ++
             unaswerText.text("Unanswered: " + unanswer)
