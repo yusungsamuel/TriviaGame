@@ -1,5 +1,6 @@
 # TriviaGame
-This trivia game has the theme of Hollywood Celebrity. 
+This trivia game has the theme of Hollywood Celebrity.
+![alt text](assets/images/ReadMe.gif "exampe gif") 
 ## How to Play
 When the start button is pressed, the first question and answer set will be generated and displayed on the page. The user may choose from one of the four answers. When the user make the correct choice, the correct counter will increase by one. On the other hand, if the user choose the wrong answer, the incorrect counter will increase by one. The user is given 30 seconds to answer each question. If the user did not make any choice before the time is up, the unanswered counter will increase by one. 
 

@@ -15,6 +15,10 @@ $(document).ready(function () {
     var answerImage = $("#answer-image")
     var correctAnswer = $("#correct-answer")
     var scoreboardText = $("#scoreboard")
+    var camera = new Audio("assets/Sound/Paparazzi Cameras-SoundBible.com-710959757.mp3")
+    var cheer = new Audio ("assets/Sound/Cheering 2-SoundBible.com-457490617.mp3")
+    var boo = new Audio ("assets/Sound/Crowd Boo 3-SoundBible.com-595364990.mp3")
+
 
     //Global Variables
     var correct = 0;
@@ -90,6 +94,7 @@ $(document).ready(function () {
         if (!gameStarted) {
             gameStarted = true;
             startButton.addClass("hidden")
+            camera.play()
             questionCounter = 0;
             resetScores();
             displayQuestion();
@@ -126,6 +131,7 @@ $(document).ready(function () {
             if (correctAnswerArr.indexOf(value) === -1) {
                 incorrect++
                 incorrectText.text("Incorrect: " + incorrect)
+                boo.play()
                 console.log(correctAnswerArr.indexOf(value))
                 console.log(questionCounter)
                 inBetweenQuestions ()
@@ -133,6 +139,7 @@ $(document).ready(function () {
             else {
                 correct++
                 correctText.text("Correct: " + correct);
+                cheer.play()
                 console.log(correctAnswerArr.indexOf(value));
                 console.log(questionCounter)
                 inBetweenQuestions ()
