@@ -2,6 +2,7 @@ body {
     background-image: url("https://ak8.picdn.net/shutterstock/videos/3671588/thumb/1.jpg");
     background-size: cover;
     background-repeat: no-repeat;
+    height: 100vh;
 }
 
 .container {
